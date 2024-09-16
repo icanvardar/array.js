@@ -5,6 +5,10 @@ export default abstract class Cache<T, K extends object> {
 		this.memory = new Map<T, WeakRef<K>>();
 	}
 
+	protected get size(): number {
+		return this.memory.size;
+	}
+
 	protected addItem(key: T, item: K) {
 		this.memory.set(key, new WeakRef<K>(item));
 	}
@@ -19,11 +23,11 @@ export default abstract class Cache<T, K extends object> {
 		return null;
 	}
 
-	protected remove(key: T) {
+	protected removeItem(key: T) {
 		this.memory.delete(key);
 	}
 
-	protected clear() {
+	protected clearMemory() {
 		this.memory.clear();
 	}
 }
