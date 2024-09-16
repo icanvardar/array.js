@@ -65,7 +65,7 @@ test("test i16 type", () => {
 		const randNum = Math.floor(Math.random() * (32767 - (-32768) + 1)) + (-32768);
 		allocator.setData(i, randNum);
 		items.push(randNum);
-	} const epsilon = 1e-7; // Define a tolerance level
+	}
 
 	for (let i = 0; i <= items.length; ++i) {
 		const data = allocator.getData(i);

@@ -1,29 +1,12 @@
 import { test, expect, mock } from "bun:test";
 import NonPrimitiveAllocator from "../core/non-primitive-allocator";
+import type { TestInterface, TestType } from "./common";
 
 const createNonPrimitiveAllocator = <T extends object>() => {
 	return mock(() => {
 		return new NonPrimitiveAllocator<T>();
 	});
 };
-
-type TestType = {
-	field1: number,
-	field2: string,
-	field3: {
-		field31: number,
-		field32: boolean,
-	}
-}
-
-interface TestInterface {
-	field1: number,
-	field2: string,
-	field3: {
-		field31: number,
-		field32: boolean,
-	}
-}
 
 test("test custom type", () => {
 	const allocator = createNonPrimitiveAllocator<TestType>()();
