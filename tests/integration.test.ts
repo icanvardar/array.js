@@ -1,6 +1,6 @@
 import { test, expect, mock } from "bun:test";
 import ArrayList from "../core/array-list";
-import type { TestType } from "./common";
+import { testType, type TestType } from "./common";
 
 const createPrimitiveArrayList = <T extends SupportedPrimitives | SupportedNonPrimitives>(config?: ArrayListConfig) => {
 	return mock(() => {
@@ -28,15 +28,6 @@ test("test primitive type", () => {
 
 test("test non-primitive type", () => {
 	const arrayList = createPrimitiveArrayList<TestType>()();
-
-	const testType: TestType = {
-		field1: 1,
-		field2: "test",
-		field3: {
-			field31: 1,
-			field32: true,
-		},
-	};
 
 	for (let i = 0; i <= 32; ++i) {
 		arrayList.setData(i, testType);
