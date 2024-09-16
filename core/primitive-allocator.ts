@@ -8,8 +8,8 @@ const operandTable: Record<PrimitiveDataType, { get: string, set: string, array:
 	u16: { get: "getUint16", set: "setUint16", array: Uint16Array },
 	i32: { get: "getInt32", set: "setInt32", array: Int32Array },
 	u32: { get: "getUint32", set: "setUint32", array: Uint32Array },
-	f32: { get: "getInt8", set: "setInt8", array: Float32Array },
-	f64: { get: "getInt8", set: "setInt8", array: Float64Array },
+	f32: { get: "getFloat32", set: "setFloat32", array: Float32Array },
+	f64: { get: "getFloat64", set: "setFloat64", array: Float64Array },
 	bigi64: { get: "getBigInt64", set: "setBigInt64", array: BigInt64Array },
 	bigu64: { get: "getBigUint64", set: "setBigUint64", array: BigUint64Array },
 }
