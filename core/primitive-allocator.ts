@@ -17,19 +17,33 @@ const operandTable: Record<PrimitiveDataType, { get: string, set: string, array:
 export default class PrimitiveAllocator<T extends boolean | number | bigint> implements Allocator<T> {
 	private dataType: PrimitiveDataType;
 	private data: TypedArray;
-	private capacity: number;
+	private cap: number;
 
 	constructor(config: PrimitiveAllocatorConfig) {
 		this.dataType = config.dataType;
-		this.capacity = DEFAULT_CAPACITY;
+		this.cap = DEFAULT_CAPACITY * this.getBytesMultiplier();
 
 		this.data = new operandTable[this.dataType].array(this.generateArrayBuffer());
+	}
+
+	get length(): number {
+		let length = this.cap;
+
+		while (length > 0 && this.data[length - 1] === 0) {
+			length--;
+		}
+
+		return length;
+	}
+
+	get capacity(): number {
+		return this.cap / this.getBytesMultiplier();
 	}
 
 	public getData(index: Index): T | null {
 		const sig = operandTable[this.dataType].get as keyof DataView;
 
-		return (new DataView(this.data.buffer)[sig] as Function)(index) as T;
+		return (new DataView(this.data.buffer)[sig] as Function)(index * this.getBytesMultiplier()) as T;
 	}
 
 	public setData(index: Index, item: T): void {
@@ -38,19 +52,19 @@ export default class PrimitiveAllocator<T extends boolean | number | bigint> imp
 		const sig = operandTable[this.dataType].set as keyof DataView;
 
 		(new DataView(this.data.buffer)[sig] as Function)
-			(index, (this.dataType === "bigu64" || this.dataType === "bigi64") ? item as bigint : item as number);
+			(index * this.getBytesMultiplier(), (this.dataType === "bigu64" || this.dataType === "bigi64") ? item as bigint : item as number);
 	}
 
 	public ensureCapacity(index: Index): void {
-		if (index < this.capacity) {
+		if (index * this.getBytesMultiplier() < this.cap) {
 			return;
 		}
 
-		const tmp = Math.ceil((index + 1) / 4)
-		const tmp2 = Math.floor(this.capacity / 4);
+		const tmp = Math.ceil((index + 1) * this.getBytesMultiplier() / 4);
+		const tmp2 = Math.floor(this.cap / 4);
 		const diff = (tmp - tmp2);
 
-		this.capacity += (diff * 4);
+		this.cap += (diff * this.getBytesMultiplier() * 4);
 
 		const newBuffer = this.generateArrayBuffer();
 
@@ -72,24 +86,28 @@ export default class PrimitiveAllocator<T extends boolean | number | bigint> imp
 	}
 
 	private generateArrayBuffer() {
-		let buffer: ArrayBuffer;
+		return new ArrayBuffer(this.cap * this.getBytesMultiplier());
+	}
 
-		switch (this.dataType.slice(-2)) {
-			case "64":
-				buffer = new ArrayBuffer(this.capacity * 8);
-				break;
-			case "32":
-				buffer = new ArrayBuffer(this.capacity * 4);
-				break;
-			case "16":
-				buffer = new ArrayBuffer(this.capacity * 2);
-				break;
-			case "8":
+	private getBytesMultiplier() {
+		switch (this.dataType) {
+			case "f64":
+			case "bigu64":
+			case "bigi64":
+				return 8;
+			case "f32":
+			case "u32":
+			case "i32":
+				return 4;
+			case "u16":
+			case "i16":
+				return 2;
+			case "bool":
+			case "u8":
+			case "i8":
 			default:
-				buffer = new ArrayBuffer(this.capacity);
-				break;
+				return 1;
 		}
 
-		return buffer;
 	}
 }
