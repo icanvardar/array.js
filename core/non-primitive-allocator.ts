@@ -58,7 +58,8 @@ export default class NonPrimitiveAllocator<T extends object> extends Cache<strin
 		const newBuffer = new ArrayBuffer(this.cap);
 
 		const newData = new Uint8Array(newBuffer);
-		newData.set(this.data.buffer as never);
+
+		newData.set(this.data.subarray(0, this.data.length) as ArrayLike<number>);
 
 		this.data = newData;
 	}
