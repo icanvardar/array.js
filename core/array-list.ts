@@ -25,12 +25,12 @@ export default class ArrayList<T extends SupportedPrimitives | SupportedNonPrimi
 		}
 	}
 
-	public getData(key: Key): SupportedPrimitives | SupportedNonPrimitives | null {
-		return this.data.getData(key);
+	public getData(index: Index): SupportedPrimitives | SupportedNonPrimitives | null {
+		return this.data.getData(index);
 	}
 
-	public setData(key: Key, item: T) {
-		this.data.setData(key, item as never);
+	public setData(index: Index, item: T) {
+		this.data.setData(index, item as never);
 	}
 }
 

@@ -26,27 +26,27 @@ export default class PrimitiveAllocator<T extends boolean | number | bigint> imp
 		this.data = new operandTable[this.dataType].array(this.generateArrayBuffer());
 	}
 
-	public getData(key: Key): T | null {
+	public getData(index: Index): T | null {
 		const sig = operandTable[this.dataType].get as keyof DataView;
 
-		return (new DataView(this.data.buffer)[sig] as Function)(key) as T;
+		return (new DataView(this.data.buffer)[sig] as Function)(index) as T;
 	}
 
-	public setData(key: Key, item: T): void {
-		this.ensureCapacity(key);
+	public setData(index: Index, item: T): void {
+		this.ensureCapacity(index);
 
-		const sig = operandTable[this.dataType].set as keyof DataView;
+		const sig = operandTable[this.dataType].set as indexof DataView;
 
 		(new DataView(this.data.buffer)[sig] as Function)
-			(key, (this.dataType === "bigu64" || this.dataType === "bigi64") ? item as bigint : item as number);
+			(index, (this.dataType === "bigu64" || this.dataType === "bigi64") ? item as bigint : item as number);
 	}
 
-	public ensureCapacity(key: Key): void {
-		if (key < this.capacity) {
+	public ensureCapacity(index: Index): void {
+		if (index < this.capacity) {
 			return;
 		}
 
-		const tmp = Math.ceil((key + 1) / 4)
+		const tmp = Math.ceil((index + 1) / 4)
 		const tmp2 = Math.floor(this.capacity / 4);
 		const diff = (tmp - tmp2);
 

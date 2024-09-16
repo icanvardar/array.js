@@ -4,7 +4,7 @@ interface Allocator<T> {
 	ensureCapacity(key: Key): void;
 }
 
-type Key = number;
+type Index = number;
 
 type TypedArray =
 	Int8Array |

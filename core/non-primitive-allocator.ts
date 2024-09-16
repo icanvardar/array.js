@@ -27,29 +27,29 @@ export default class NonPrimitiveAllocator<T extends object> extends Cache<strin
 		return this.data.length / 6;
 	}
 
-	public getData(key: Key): T | null {
-		const offset = this.data.slice(key * 6, (key + 1) * 6);
+	public getData(index: Index): T | null {
+		const offset = this.data.slice(index * 6, (index + 1) * 6);
 
 		return this.getItem(String.fromCharCode(...offset));
 	}
 
-	public setData(key: Key, item: T): void {
-		this.ensureCapacity(key);
+	public setData(index: Index, item: T): void {
+		this.ensureCapacity(index);
 
 		const pointer = this.generatePointer();
 		const encoder = new TextEncoder();
 
-		this.data.set(encoder.encode(pointer), key * 6);
+		this.data.set(encoder.encode(pointer), index * 6);
 
 		super.addItem(pointer, item);
 	}
 
-	public ensureCapacity(key: Key): void {
-		if ((key * 6) < this.cap) {
+	public ensureCapacity(index: Index): void {
+		if ((index * 6) < this.cap) {
 			return;
 		}
 
-		const tmp = Math.floor((key + 1) * 6 / 4)
+		const tmp = Math.floor((index + 1) * 6 / 4)
 		const tmp2 = Math.floor(this.cap / 4);
 		const diff = (tmp - tmp2);
 
