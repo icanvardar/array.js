@@ -7,5 +7,11 @@
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
-  }
+  },
+  "scripts": {
+        "test": "bun test",
+        "coverage": "bun test --coverage",
+        "build": "bun run clean && bun run build.mjs",
+        "clean": "rm -rf ./out ./node_modules bun.lockb",
+    },
 }
