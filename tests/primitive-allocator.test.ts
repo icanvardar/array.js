@@ -1,5 +1,5 @@
 import { test, expect, mock } from "bun:test";
-import PrimitiveAllocator from "../core/primitive-allocator";
+import PrimitiveAllocator from "../src/core/primitive-allocator";
 
 const DECIMAL_TOLERANCE_LEVEL = 1e-7;
 

@@ -1,5 +1,5 @@
 import { test, expect, mock } from "bun:test";
-import NonPrimitiveAllocator from "../core/non-primitive-allocator";
+import NonPrimitiveAllocator from "../src/core/non-primitive-allocator";
 import { testInterface, testType, type TestInterface, type TestType } from "./common";
 
 const createNonPrimitiveAllocator = <T extends object>() => {

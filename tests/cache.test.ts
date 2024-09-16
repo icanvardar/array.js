@@ -1,5 +1,5 @@
 import { test, expect, mock } from "bun:test";
-import Cache from "../utils/cache";
+import Cache from "../src/utils/cache";
 import { testType, type TestType } from "./common";
 
 const createCacheInheritant = mock(() => {

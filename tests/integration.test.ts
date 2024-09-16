@@ -1,5 +1,5 @@
 import { test, expect, mock } from "bun:test";
-import ArrayList from "../core/array-list";
+import ArrayList from "../src/core/array-list";
 import { testType, type TestType } from "./common";
 
 const createPrimitiveArrayList = <T extends SupportedPrimitives | SupportedNonPrimitives>(config?: ArrayListConfig) => {

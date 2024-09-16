@@ -1,6 +1,6 @@
-import ArrayList from "./core/array-list";
-import PrimitiveAllocator from "./core/primitive-allocator";
-import NonPrimitiveAllocator from "./core/non-primitive-allocator";
+import ArrayList from "./src/core/array-list";
+import PrimitiveAllocator from "./src/core/primitive-allocator";
+import NonPrimitiveAllocator from "./src/core/non-primitive-allocator";
 
 export {
 	ArrayList,
