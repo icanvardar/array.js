@@ -34,3 +34,16 @@ type PrimitiveDataType =
 type PrimitiveAllocatorConfig = {
 	dataType: PrimitiveDataType;
 };
+
+type SupportedPrimitives = number | boolean | bigint;
+type SupportedNonPrimitives = object;
+
+type Allocator<T> = T extends SupportedPrimitives
+	? PrimitiveAllocator<T>
+	: T extends SupportedNonPrimitives
+	? NonPrimitiveAllocator<T>
+	: never;
+
+type ArrayListConfig = {
+	dataType?: PrimitiveDataType;
+};

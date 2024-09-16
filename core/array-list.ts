@@ -1,19 +1,6 @@
 import PrimitiveAllocator from "./primitive-allocator";
 import NonPrimitiveAllocator from "./non-primitive-allocator";
 
-type SupportedPrimitives = number | boolean | bigint;
-type SupportedNonPrimitives = object;
-
-type Allocator<T> = T extends SupportedPrimitives
-	? PrimitiveAllocator<T>
-	: T extends SupportedNonPrimitives
-	? NonPrimitiveAllocator<T>
-	: never;
-
-type ArrayListConfig = {
-	dataType?: PrimitiveDataType;
-};
-
 export default class ArrayList<T extends SupportedPrimitives | SupportedNonPrimitives> {
 	private data: Allocator<T>;
 
