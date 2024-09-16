@@ -1,15 +1,15 @@
-export default class Cache<T extends object> {
-	private memory: Map<number, WeakRef<T>>;
+export default abstract class Cache<T, K extends object> {
+	private memory: Map<T, WeakRef<K>>;
 
 	constructor() {
-		this.memory = new Map<number, WeakRef<T>>();
+		this.memory = new Map<T, WeakRef<K>>();
 	}
 
-	public add(key: number, item: T) {
-		this.memory.set(key, new WeakRef<T>(item));
+	protected addItem(key: T, item: K) {
+		this.memory.set(key, new WeakRef<K>(item));
 	}
 
-	public get(key: number): T | null {
+	protected getItem(key: T): K | null {
 		const ref = this.memory.get(key);
 
 		if (ref) {
@@ -19,11 +19,11 @@ export default class Cache<T extends object> {
 		return null;
 	}
 
-	public remove(key: number) {
+	protected remove(key: T) {
 		this.memory.delete(key);
 	}
 
-	public clear() {
+	protected clear() {
 		this.memory.clear();
 	}
 }
