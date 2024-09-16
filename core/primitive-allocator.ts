@@ -35,7 +35,7 @@ export default class PrimitiveAllocator<T extends boolean | number | bigint> imp
 	public setData(index: Index, item: T): void {
 		this.ensureCapacity(index);
 
-		const sig = operandTable[this.dataType].set as indexof DataView;
+		const sig = operandTable[this.dataType].set as keyof DataView;
 
 		(new DataView(this.data.buffer)[sig] as Function)
 			(index, (this.dataType === "bigu64" || this.dataType === "bigi64") ? item as bigint : item as number);
@@ -55,12 +55,23 @@ export default class PrimitiveAllocator<T extends boolean | number | bigint> imp
 		const newBuffer = this.generateArrayBuffer();
 
 		const newData = new operandTable[this.dataType].array(newBuffer);
-		newData.set(this.data.buffer as never);
+
+		if (this.isBigIntTypedArray(this.data) && this.isBigIntTypedArray(newData)) {
+			newData.set(this.data.subarray(0, this.data.length) as ArrayLike<bigint>);
+		} else if (!this.isBigIntTypedArray(this.data) && !this.isBigIntTypedArray(newData)) {
+			newData.set(this.data.subarray(0, this.data.length) as ArrayLike<number>);
+		} else {
+			throw new Error("Mismatched data types between old and new array buffers.");
+		}
 
 		this.data = newData;
 	}
 
-	protected generateArrayBuffer() {
+	private isBigIntTypedArray(arr: TypedArray): arr is BigInt64Array | BigUint64Array {
+		return arr instanceof BigInt64Array || arr instanceof BigUint64Array;
+	}
+
+	private generateArrayBuffer() {
 		let buffer: ArrayBuffer;
 
 		switch (this.dataType.slice(-2)) {
