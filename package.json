@@ -1,17 +1,25 @@
 {
-  "name": "array.js",
-  "module": "index.ts",
-  "type": "module",
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "scripts": {
+    "name": "plaxis",
+    "author": {
+        "name": "Can Vardar",
+        "url": "https://github.com/icanvardar",
+        "email": "ismailcanvardar@gmail.com"
+    },
+    "module": "index.ts",
+    "version": "0.1.0",
+    "type": "module",
+    "main": "./out/index.js",
+    "types": "./out/types/global.d.ts",
+    "devDependencies": {
+        "@types/bun": "latest"
+    },
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    },
+    "scripts": {
         "test": "bun test",
         "coverage": "bun test --coverage",
         "build": "bun run clean && bun run build.mjs",
-        "clean": "rm -rf ./out ./node_modules bun.lockb",
-    },
+        "clean": "rm -rf ./out ./node_modules bun.lockb"
+    }
 }
