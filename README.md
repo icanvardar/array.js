@@ -1,6 +1,6 @@
-# array.js
+# plaxis
 
-`array.js` is a powerful, type-safe array management library for JavaScript and TypeScript. It supports both primitive and non-primitive data types, offering efficient memory management through custom allocators.
+`plaxis` is a powerful, type-safe array management library for JavaScript and TypeScript. It supports both primitive and non-primitive data types, offering efficient memory management through custom allocators.
 
 ## Features
 
@@ -12,11 +12,11 @@
 ## Installation Options
 
 ```bash
-npm install array.js
+npm install plaxis
 ```
 
 ```bash
-bun add array.js
+bun add plaxis
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ bun add array.js
 ### Importing
 
 ```typescript
-import ArrayList from 'array.js';
+import ArrayList from 'plaxis';
 ```
 
 ### Creating an ArrayList for Primitive Types
@@ -114,4 +114,4 @@ Stores an object at the specified index.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/icanvardar/array.js/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/icanvardar/plaxis/blob/main/LICENSE) file for details.
