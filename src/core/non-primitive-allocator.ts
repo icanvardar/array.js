@@ -1,4 +1,5 @@
 import { DEFAULT_CAPACITY } from "../constants";
+import type { Allocator, Index } from "../types";
 import Cache from "../utils/cache";
 
 export default class NonPrimitiveAllocator<T extends object> extends Cache<string, T> implements Allocator<T> {
