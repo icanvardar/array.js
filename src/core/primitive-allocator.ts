@@ -1,4 +1,17 @@
 import { DEFAULT_CAPACITY } from "../constants";
+import type { Allocator, Index, PrimitiveDataType } from "../types";
+
+export type TypedArray =
+	Int8Array |
+	Uint8Array |
+	Int16Array |
+	Uint16Array |
+	Int32Array |
+	Uint32Array |
+	Float32Array |
+	Float64Array |
+	BigInt64Array |
+	BigUint64Array;
 
 const operandTable: Record<PrimitiveDataType, { get: string, set: string, array: new (buffer: ArrayBuffer) => TypedArray }> = {
 	bool: { get: "getUint8", set: "setUint8", array: Uint8Array },
@@ -13,6 +26,10 @@ const operandTable: Record<PrimitiveDataType, { get: string, set: string, array:
 	bigi64: { get: "getBigInt64", set: "setBigInt64", array: BigInt64Array },
 	bigu64: { get: "getBigUint64", set: "setBigUint64", array: BigUint64Array },
 }
+
+export type PrimitiveAllocatorConfig = {
+	dataType: PrimitiveDataType;
+};
 
 export default class PrimitiveAllocator<T extends boolean | number | bigint> implements Allocator<T> {
 	private dataType: PrimitiveDataType;

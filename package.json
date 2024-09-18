@@ -5,11 +5,11 @@
         "url": "https://github.com/icanvardar",
         "email": "ismailcanvardar@gmail.com"
     },
-    "module": "index.ts",
-    "version": "0.1.0",
+    "version": "0.1.2",
     "type": "module",
-    "main": "./out/index.js",
-    "types": "./out/types/global.d.ts",
+    "main": "out/index.js",
+    "module": "out/index.js",
+    "types": "out/index.d.ts",
     "devDependencies": {
         "@types/bun": "latest"
     },
@@ -19,7 +19,11 @@
     "scripts": {
         "test": "bun test",
         "coverage": "bun test --coverage",
-        "build": "bun run clean && bun run build.mjs",
+        "build": "bun run clean && bun run build.mjs && bun run typegen",
+        "typegen": "npx tsc --declaration --emitDeclarationOnly --outDir ./out",
         "clean": "rm -rf ./out ./node_modules bun.lockb"
-    }
+    },
+    "files": [
+        "out"
+    ]
 }
