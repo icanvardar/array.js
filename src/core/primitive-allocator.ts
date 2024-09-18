@@ -1,5 +1,5 @@
 import { DEFAULT_CAPACITY } from "../constants";
-import type { Allocator, PrimitiveDataType } from "../types";
+import type { Allocator, Index, PrimitiveDataType } from "../types";
 
 export type TypedArray =
 	Int8Array |
